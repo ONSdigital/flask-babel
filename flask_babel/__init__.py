@@ -17,17 +17,13 @@ from flask import current_app, request
 from flask.ctx import has_request_context
 from babel import dates, numbers, support, Locale
 from werkzeug import ImmutableDict
-try:
-    from pytz.gae import pytz
-except ImportError:
-    from pytz import timezone, UTC
-else:
-    timezone = pytz.timezone
-    UTC = pytz.UTC
+import pendulum
 
 from flask_babel._compat import string_types
 from flask_babel.speaklater import LazyString
 
+timezone = pendulum.timezone
+UTC = pendulum.UTC
 
 class Babel(object):
     """Central controller class that can be used to configure how
@@ -181,7 +177,7 @@ class Babel(object):
     @property
     def default_timezone(self):
         """The default timezone from the configuration as instance of a
-        `pytz.timezone` object.
+        `pendulum.timezone` object.
         """
         return timezone(self.app.config['BABEL_DEFAULT_TIMEZONE'])
 
@@ -265,7 +261,7 @@ def get_locale():
 
 def get_timezone():
     """Returns the timezone that should be used for this request as
-    `pytz.timezone` object.  This returns `None` if used outside of
+    `pendulum.timezone` object.  This returns `None` if used outside of
     a request.
     """
     ctx = _get_current_context()
@@ -366,7 +362,7 @@ def to_user_timezone(datetime):
     if datetime.tzinfo is None:
         datetime = datetime.replace(tzinfo=UTC)
     tzinfo = get_timezone()
-    return tzinfo.normalize(datetime.astimezone(tzinfo))
+    return tzinfo._normalize(datetime.astimezone(tzinfo))
 
 
 def to_utc(datetime):

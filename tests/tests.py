@@ -117,7 +117,7 @@ class DateFormattingTestCase(unittest.TestCase):
         with app.test_request_context():
             app.config['BABEL_DEFAULT_LOCALE'] = 'de_DE'
             assert babel.format_datetime(d, 'long') == \
-                '12. April 2010 um 15:46:00 MESZ'
+                '12. April 2010 um 15:46:00 +0100'
 
     def test_init_app(self):
         b = babel.Babel()
@@ -139,7 +139,7 @@ class DateFormattingTestCase(unittest.TestCase):
         with app.test_request_context():
             app.config['BABEL_DEFAULT_LOCALE'] = 'de_DE'
             assert babel.format_datetime(d, 'long') == \
-                '12. April 2010 um 15:46:00 MESZ'
+                '12. April 2010 um 15:46:00 +0100'
 
     def test_custom_formats(self):
         app = flask.Flask(__name__)

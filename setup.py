@@ -22,7 +22,8 @@ setup(
     install_requires=[
         'Flask',
         'Babel>=2.3',
-        'Jinja2>=2.5'
+        'Jinja2>=2.5',
+        'pendulum>2'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
